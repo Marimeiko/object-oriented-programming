@@ -1,5 +1,5 @@
 # Symulator Handlu Morskiego - SHM
-
+ppppp
 Wykorzystaj kod napisany podczas zajęć. Jeśli go nie masz to skorzystaj z kodu w katalogu [solutions](../module1/solutions)
 
 ___
