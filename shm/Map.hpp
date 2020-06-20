@@ -2,6 +2,9 @@
 
 #include <vector>
 
+constexpr size_t INITIAL_ISLAND_NUM = 10;
+constexpr int SQUARE_MAP_SIZE = 100;
+
 class Map {
   public:
     Map();            //c-tor

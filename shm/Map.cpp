@@ -17,11 +17,10 @@ Island generateRandomCoordinate(const int& lowerBound, const int& upperBound) {
 }
 
 Map::Map() {
-    constexpr size_t INITIAL_ISLAND_NUM = 10;
     size_t counter = 0;
 
     while (counter != INITIAL_ISLAND_NUM) {
-        Island tmpIsland = generateRandomCoordinate(-100, 100);
+        Island tmpIsland = generateRandomCoordinate(-(SQUARE_MAP_SIZE), SQUARE_MAP_SIZE);
         std::vector<Island>::iterator it = std::find_if(vectorOfIslands_.begin(), vectorOfIslands_.end(),
                                                         [tmpIsland](const Island& island) -> bool { return ((island.positionX == tmpIsland.positionX) && (island.positionY == tmpIsland.positionY)); });
         if (it == vectorOfIslands_.end()) {
