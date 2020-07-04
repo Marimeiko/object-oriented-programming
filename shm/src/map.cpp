@@ -20,7 +20,7 @@ Map::Map() {
 
         auto it = std::find_if(vectorOfIslands_.begin(),
                                vectorOfIslands_.end(),
-                               [=](const Island &island) -> bool {
+                               [=](const Island& island) -> bool {
                                    return (island.getPosition() ==
                                            Coordinates(posX, posY));
                                });
@@ -34,10 +34,10 @@ Map::~Map() {}
 
 Island* Map::getIsland(const Coordinates& coordinates) {
     auto it = std::find_if(vectorOfIslands_.begin(),
-                            vectorOfIslands_.end(),
-                            [&](auto& el) {
-                                return el.getPosition() == coordinates;
-                            });
+                           vectorOfIslands_.end(),
+                           [&](auto& el) {
+                               return el.getPosition() == coordinates;
+                           });
     if (it != vectorOfIslands_.end()) {
         return std::addressof(*it);
     }
@@ -46,9 +46,13 @@ Island* Map::getIsland(const Coordinates& coordinates) {
 
 void Map::printMap() {
     std::cout << "\nNumber of Islands: " << vectorOfIslands_.size() << "\n";
-    for (const auto &el : vectorOfIslands_) {
+    for (const auto& el : vectorOfIslands_) {
         std::cout << "Coordinate (X, Y): "
                   << "(" << el.getPosition().getPositionX() << ", "
                   << el.getPosition().getPositionY() << ")\n";
     }
+}
+
+void Map::travel(Island* island) {
+    currentPosition_ = island;
 }
