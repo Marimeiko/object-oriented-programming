@@ -4,6 +4,8 @@
 #include "map.hpp"
 #include "player.hpp"
 #include "time.hpp"
+#include "store.hpp"
+
 
 class Game {
 public:
@@ -13,12 +15,13 @@ public:
     enum class Action { Travel = 1,
                         Sell = 2,
                         Buy = 3,
+                        PrintCargo = 4,
                         Exit = 0 };
 
     void StartGame();
 
 private:
-    bool CheckWinCondition() const;  //do sprawdzenia moze bool
+    bool CheckWinCondition() const;  
     bool CheckLooseCodition() const;
     void PrintMenu();
     void PrintOptions();
@@ -36,5 +39,8 @@ private:
     size_t current_day_;
     std::unique_ptr<Map> map_;
     std::unique_ptr<Time> time_;
-    std::unique_ptr<Player> player_;
+    std::shared_ptr<Player> player_;
+    std::unique_ptr<Store> store_;
+
+    std::unique_ptr<Ship> ship_;
 };

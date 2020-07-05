@@ -11,6 +11,7 @@ public:
     Island* getIsland(const Coordinates& coordinates);
     void printMap();
     void travel(Island* island);
+    size_t getDistanceToIsland(Island* island);
 
 private:
     std::vector<Island> vectorOfIslands_;

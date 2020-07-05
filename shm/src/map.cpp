@@ -56,3 +56,14 @@ void Map::printMap() {
 void Map::travel(Island* island) {
     currentPosition_ = island;
 }
+
+size_t Map::getDistanceToIsland(Island* island) {
+    auto xCurrent = currentPosition_->getPosition().getPositionX();
+    auto yCurrent = currentPosition_->getPosition().getPositionY();
+    auto xIsland = island->getPosition().getPositionX();
+    auto yIsland = island->getPosition().getPositionY();
+
+    auto xLength = std::max(xCurrent, xIsland) - std::min(xCurrent, xIsland);
+    auto yLength = std::max(yCurrent, yIsland) - std::min(yCurrent, yIsland);
+    return std::floor(std::hypot(xLength, yLength));
+}

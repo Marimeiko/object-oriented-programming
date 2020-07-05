@@ -1,11 +1,14 @@
 #include "game.hpp"
 
+#include <cstddef>
 #include <iostream>
 
 Game::Game(size_t money, size_t days, size_t final_goal)
     : money_(money), days_(days), final_goal_(final_goal), time_(std::make_unique<Time>()) {
     map_ = std::make_unique<Map>();
     current_day_ = time_->getElapsedTime();
+    ship_ = std::make_unique<Ship>(100, 20, 60, "PlayerShip", 1);
+    player_ = std::make_shared<Player>(ship_, 250, 30);
 }
 
 void Game::StartGame() {
@@ -52,6 +55,7 @@ void Game::PrintOptions() {
     std::cout << "1. Travel\n"
               << "2. Sell\n"
               << "3. Buy\n"
+              << "4. Print cargo\n"
               << "0. Exit\n"
               << "Choice: ";
 }
@@ -108,10 +112,50 @@ void Game::Travel() {
 }
 
 void Game::Sell() {
+    while (true) {
+        player_->printShipCargo();
+        std::cout << store_ << "Select product and quantity: ";
+        size_t product, amount;
+        std::cin >> product >> amount;
+        Cargo* cargo = player_.getCargo(--product);
+        Store::Response response = store_.sell(cargo, amount, player_.get());
+        switch (response) {
+        case Store::Response::done:
+            std::cout << "Sell " << amount << " " << product << "\n";
+            return;
+        case Store::Response::lack_of_cargo:
+            std::cout << "There is no enough cargo to sell \n";
+        case Store::Response::lack_of_space:
+            std::cout << "There is no enough space in storess \n";
+        }
+        store_.printCargo();
+    }
 }
 
 void Game::Buy() {
+    while (true) {
+        player_->printShipCargo();
+        std::cout << store_ << "Select product and quantity: ";
+        size_t product, amount;
+        std::cin >> product >> amount;
+        Cargo* cargo = store_.getCargo(--product);
+        Store::Response response = store_.buy(cargo, amount, player_.get());
+        switch (response) {
+        case Store::Response::done:
+            std::cout << "Buy " << amount << " " << product << "\n";
+            return;
+        case Store::Response::lack_of_cargo:
+            std::cout << "There is no enough cargo to buy \n";
+        case Store::Response::lack_of_money:
+            std::cout << "You do not have enough money \n";
+        case Store::Response::lack_of_space:
+            std::cout << "You do not have enough space on your ship \n";
+        }
+        store_.printCargo();
+    }
 }
 
 void Game::PrintCargo() {
+    std::"You have:\n";
+    player_->printShipCargo();
 }
